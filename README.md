@@ -1,7 +1,7 @@
 
 ## algo-in-python
 
-Examples of `problem-solving-with-algorithms-and-data-structure-using-python`
+Examples of the book `<<problem-solving-with-algorithms-and-data-structure-using-python>>`
 
 ## book online 
 

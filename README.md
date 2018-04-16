@@ -1,9 +1,9 @@
 
 ## algo-in-python
 
-Examples of <<problem-solving-with-algorithms-and-data-structure-using-python>>
+Examples of `problem-solving-with-algorithms-and-data-structure-using-python`
 
-## book
+## book online 
 
 [en](http://interactivepython.org/runestone/static/pythonds/index.html#)
 

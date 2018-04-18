@@ -12,8 +12,6 @@ import sys
 import os
 sys.path.extend([os.path.abspath('..')])
 
-from tools.wraps import run_time
-
 
 def test1():
     """

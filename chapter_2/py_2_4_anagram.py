@@ -35,6 +35,8 @@ def anagram_solution_1(s1, s2):
 
     T = O(n^2)
     """
+    if len(s1) != len(s2):
+        return False
 
     alist = list(s2)
 
@@ -147,7 +149,7 @@ def anagram_solution_4(s1, s2):
 
 
 if __name__ == "__main__":
-    print(anagram_solution_1('abcde', 'aabde'))
+    print(anagram_solution_1('abcde', 'abcdef'))
     print(anagram_solution_2('abcdehff', 'acbdffhe'))
     print(anagram_solution_4('abcdjhhhhhhhhsfjljsjfls', 'bacdjfdsjlfjslfjldkjf'))
 

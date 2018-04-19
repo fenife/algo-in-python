@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-3.10 队列的实现
+3.12 队列的实现
 """
 
 from __future__ import print_function

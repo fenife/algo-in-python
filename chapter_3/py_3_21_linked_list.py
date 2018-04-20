@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-3.21 链表
+3.21 无序链表
 """
 
 from __future__ import print_function
@@ -89,12 +89,11 @@ class UnorderedList(object):
         else:
             previous.set_next(current.get_next())
 
-
-def show_list(link_list):
-    current = link_list.head
-    while current is not None:
-        print(current.get_data())
-        current = current.get_next()
+    def show(self):
+        current = self.head
+        while current is not None:
+            print(current.get_data())
+            current = current.get_next()
 
 
 def test_unordered_list():
@@ -106,7 +105,7 @@ def test_unordered_list():
     ll.remove(1)
     ll.remove(2)
 
-    show_list(ll)
+    ll.show()
 
 
 if __name__ == "__main__":

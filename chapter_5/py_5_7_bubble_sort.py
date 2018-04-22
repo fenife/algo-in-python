@@ -8,6 +8,11 @@ from __future__ import print_function
 
 
 def bubble_sort(alist):
+    """
+    冒泡排序需要多次遍历列表。它比较相邻的项并交换那些无序的项。
+    每次遍历列表将下一个最大的值放在其正确的位置。
+    每个项“冒泡”到它所属的位置。
+    """
     for passnum in range(len(alist)-1, 0, -1):
         for i in range(passnum):
             if alist[i] > alist[i+1]:

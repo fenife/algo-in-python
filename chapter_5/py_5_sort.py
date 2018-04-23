@@ -21,6 +21,7 @@
 
 from __future__ import print_function
 from time import time
+from random import shuffle
 
 
 class BaseSort(object):
@@ -61,7 +62,7 @@ class BaseSort(object):
         end = time()
         print("After  sort:", self.alist)
         print("run time:", end - start)
-        # assert self.isSorted()
+        assert self.isSorted()
 
 
 class BubbleSort(BaseSort):
@@ -255,15 +256,108 @@ class MergeSort(BaseSort):
     """
     归并排序
 
+    递归地将一个数组分成两半分别排序，然后将结果归并起来
+
+    时间复杂度：T = O(nlog^n)
+    空间复杂度：S = O(n)
     """
     def sort(self):
         self.merge_sort()
 
     def merge_sort(self):
         a = self.alist
-        n = len(a)
+        self.aux = [None] * len(a)      # 一次性分配固定大小的空间
+        self._sort(a, 0, len(a)-1)
+
+    def _sort(self, a, lo, hi):
+        # 将数组 a[lo...hi] 排序
+        if lo >= hi:
+            return
+        mid = lo + (hi - lo) // 2
+        self._sort(a, lo, mid)     # 将左半边排序
+        self._sort(a, mid+1, hi)   # 将右半边排序
+        self.merge(a, lo, mid, hi)      # 归并结果
+
+    def merge(self, a, lo, mid, hi):
+        # 将 a[lo...mid] 和 a[mid+1...hi] 归并
+        aux = self.aux
+        i = lo
+        j = mid + 1
+
+        # 不用这种方式是因为：
+        # 每次递归都创建一个新数组来存储排序结果会需要大量的空间
+        # aux = a[:]
+
+        for k in range(lo, hi+1):
+            aux[k] = a[k]           # 将 a[lo...hi] 复制到 aux[lo...hi]
+
+        for k in range(lo, hi+1):   # 归并回到原数组 a[lo...hi] 中
+            if i > mid:             # 左半边用尽，取右边的元素
+                a[k] = aux[j]
+                j = j + 1
+            elif j > hi:            # 右半边用尽，取左边的元素
+                a[k] = aux[i]
+                i = i + 1
+            elif aux[i] > aux[j]:   # 左半边的当前元素大于右半边的当前元素，取右半边的元素
+                a[k] = aux[j]
+                j = j + 1
+            else:                   # 左半边的当前元素小于右半边的当前元素，取左半边的元素
+                a[k] = aux[i]
+                i = i + 1
 
 
+class QuickSort(BaseSort):
+    """
+    快速排序
+
+    ** 对比 **
+    - 归并排序：
+        - 分成两个数组分别排序，然后归并
+        - 递归调用发生在处理整个数组之前
+        - 切分位置：等分
+    - 快速排序：
+        - 分成两个数组，当两个子数组有序时，整个数组就自然有序了
+        - 递归调用发生在处理整个数组之后
+        - 切分位置：取决于数组的内容
+
+    时间复杂度： T = O(nlog^n)
+    """
+
+    def sort(self):
+        self.quick_sort()
+
+    def quick_sort(self):
+        a = self.alist
+        shuffle(a)          # 打乱序列，消除对输入的依赖
+        self._sort(a, 0, len(a)-1)
+
+    def _sort(self, a, lo, hi):
+        if lo >= hi:
+            return
+        j = self.partition(a, lo, hi)   # 切分
+        self._sort(a, lo, j-1)          # 将左半部分 a[lo...j-1] 排序
+        self._sort(a, j+1, hi)          # 将右半部分 a[j+1...hi] 排序
+
+    def partition(self, a, lo, hi):
+        # 将数组切分为 a[lo...i-1], a[i], a[i+1...hi]
+        v = a[lo]           # 切分元素
+        i, j = lo+1, hi    # 左右扫描指针
+
+        while True:
+            # 扫描左右，检查扫描是否结束并交换元素
+            while i <= j and a[i] < v:     # 扫描左边，直到找到一个比 v 大的元素
+                i = i + 1
+
+            while i <= j and a[j] > v:     # 扫描右边，直到找到一个比 v 小的元素
+                j = j - 1
+
+            if i > j:          # 扫描结束
+                break
+
+            self.exch(a, i, j)  # 交换元素
+
+        self.exch(a, lo, j)     # 将 v = a[j] 放入正确的位置
+        return j                # a[lo...j-1] <= a[j] <= a[j+1...hi] 达成
 
 
 if __name__ == "__main__":
@@ -271,6 +365,8 @@ if __name__ == "__main__":
     # s = BubbleSort(alist)
     # s = SelectionSort(alist)
     # s =InsertionSort(alist)
-    s = ShellSort(alist)
+    # s = ShellSort(alist)
+    # s = MergeSort(alist)
+    s = QuickSort(alist)
     s.test()
 

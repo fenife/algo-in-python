@@ -80,5 +80,14 @@ class BST(object):
         x.N = self._size(x.left) + self._size(x.right) + 1
         return x
 
+    def show(self):
+        self._show(self.root)
+
+    def _show(self, x):
+        if x is None:
+            return
+        self._show(x.left)
+        print(x.key, x.val)
+        self._show(x.right)
 
 

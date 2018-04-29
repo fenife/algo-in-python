@@ -251,9 +251,14 @@ class ShellSort(BaseSort):
         while h >= 1:       # 将数组变为 h 有序
             for i in range(h, n):
                 # 将 a[i] 插入到 a[i-h], a[i-2*h], a[i-3*h], ... 之中
-                for j in range(i, h-1, -h):         # j=i, j>=h, j=j-h
-                    if a[j] < a[j-h]:               # j-h >= 0, j>=h
-                        self.exch(a, j, j-h)
+                j = i
+                while j >= h and a[j] < a[j-h]:
+                    self.exch(a, j, j-h)
+                    j = j - h
+
+                # for j in range(i, h-1, -h):         # j=i, j>=h, j=j-h
+                #     if a[j] < a[j-h]:               # j-h >= 0, j>=h
+                #         self.exch(a, j, j-h)
             h = h // 3
 
 
@@ -369,8 +374,8 @@ if __name__ == "__main__":
     alist = [54, 26, 93, 17, 77, 31, 44, 55, 20, 9]
     # s = BubbleSort(alist)
     # s = SelectionSort(alist)
-    s =InsertionSort(alist)
-    # s = ShellSort(alist)
+    # s =InsertionSort(alist)
+    s = ShellSort(alist)
     # s = MergeSort(alist)
     # s = QuickSort(alist)
     s.test()

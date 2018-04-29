@@ -210,9 +210,14 @@ class InsertionSort(BaseSort):
         n = len(a)
         for i in range(n):
             # 将 a[i] 插入到 a[i-1], a[i-2], ... a[0] 之中
-            for j in range(i, 0, -1):
-                if a[j] < a[j-1]:
-                    self.exch(a, j, j-1)
+            j = i
+            while j > 0 and a[j] < a[j-1]:
+                self.exch(a, j, j-1)
+                j = j - 1
+
+            # for j in range(i, 0, -1):
+            #     if a[j] < a[j-1]:
+            #         self.exch(a, j, j-1)
 
 
 class ShellSort(BaseSort):
@@ -364,9 +369,9 @@ if __name__ == "__main__":
     alist = [54, 26, 93, 17, 77, 31, 44, 55, 20, 9]
     # s = BubbleSort(alist)
     # s = SelectionSort(alist)
-    # s =InsertionSort(alist)
+    s =InsertionSort(alist)
     # s = ShellSort(alist)
     # s = MergeSort(alist)
-    s = QuickSort(alist)
+    # s = QuickSort(alist)
     s.test()
 

@@ -24,12 +24,18 @@ class BST(object):
         self.root = root
 
     def size(self):
+        """
+        树中键值对（结点）的数量
+        """
         return self._size(self.root)
 
     def _size(self, x):
         return 0 if x is None else x.N
 
     def get(self, key):
+        """
+        获取键 key 对应的值（若键 key 不存在则返回空）
+        """
         return self._get(self.root, key)
 
     def _get(self, x, key):
@@ -79,6 +85,59 @@ class BST(object):
 
         x.N = self._size(x.left) + self._size(x.right) + 1
         return x
+
+    def min(self):
+        """
+        最小的键
+        """
+        return self._min(self.root).key
+
+    def _min(self, x):
+        return x if x.left is None else self._min(x)
+
+    def max(self):
+        """
+        最大的键
+        """
+        return self._max(self.root).key
+
+    def _max(self, x):
+        return x if x.right is None else self._max(x)
+
+    def floor(self, key):
+        """
+        小于等于 key 的最大值
+        """
+        x = self._floor(self.root, key)
+        return None if x is None else x.key
+
+    def _floor(self, x, key):
+        if x is None:
+            return None
+
+        if key == x.key:
+            return x
+
+        if key < x.key:
+            return self._floor(x.left, key)
+
+        t = self._floor(x.right, key)
+        return t if t is not None else x
+
+    def ceiling(self, key):
+        """
+        大于等于 key 的最小值
+        """
+
+    def rank(self, key):
+        """
+        小于 key 的键的数量
+        """
+
+    def select(self, k):
+        """
+        排名为 k 的键
+        """
 
     def show(self):
         self._show(self.root)
